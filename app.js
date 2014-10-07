@@ -5,15 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var passport = require('passport');
-var StormpathStrategy = require('passport-stormpath');
-var session = require('express-session');
 var flash = require('connect-flash')
 
 var stormpath = require('express-stormpath');
 
 var index_routes = require('./routes/index');
-var auth_routes = require('./routes/auth');
 
 var app = express();
 
@@ -25,14 +21,10 @@ app.use(stormpath.init(app, {
   apiKeySecret: process.env.STORMPATH_API_KEY_SECRET,
   secretKey:    process.env.STORMPATH_SECRET_KEY,
   application:  process.env.STORMPATH_URL,
+  redirectUrl:  '/dashboard',
 }));
 
 app.listen(process.env.PORT || 3000);
-
-var strategy = new StormpathStrategy();
-passport.use(strategy);
-passport.serializeUser(strategy.serializeUser);
-passport.deserializeUser(strategy.deserializeUser);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,17 +39,9 @@ app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: process.env.EXPRESS_SECRET,
-  key: 'sid',
-  cookie: {secure: false},
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(flash());
 
 app.use('/', index_routes);
-app.use('/', auth_routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
