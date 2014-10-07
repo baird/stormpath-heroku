@@ -5,9 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var passport = require('passport');
-var StormpathStrategy = require('passport-stormpath');
-var session = require('express-session');
 var flash = require('connect-flash')
 
 var stormpath = require('express-stormpath');
