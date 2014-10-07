@@ -25,14 +25,10 @@ app.use(stormpath.init(app, {
   apiKeySecret: process.env.STORMPATH_API_KEY_SECRET,
   secretKey:    process.env.STORMPATH_SECRET_KEY,
   application:  process.env.STORMPATH_URL,
+  redirectUrl:  '/dashboard',
 }));
 
 app.listen(process.env.PORT || 3000);
-
-var strategy = new StormpathStrategy();
-passport.use(strategy);
-passport.serializeUser(strategy.serializeUser);
-passport.deserializeUser(strategy.deserializeUser);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,13 +43,6 @@ app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: process.env.EXPRESS_SECRET,
-  key: 'sid',
-  cookie: {secure: false},
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(flash());
 
 app.use('/', index_routes);
