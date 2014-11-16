@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var flash = require('connect-flash')
+var flash = require('connect-flash');
 
 var stormpath = require('express-stormpath');
 
@@ -30,8 +30,7 @@ app.listen(process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +41,43 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
 app.use('/', index_routes);
+
+
+////TESTS////
+
+
+// Saving token to Stormpath
+
+app.post('/savetoken', stormpath.loginRequired, function(req, res) { 
+  console.log(req.body.token);
+  var token = (req.body.token);
+  res.locals.user.token = (token);
+res.locals.user.save(function(err) {
+  if (!err) {
+    console.log('User change saved successfully.');
+  }
+});
+});
+
+//app.get('/settings/savetoken', stormpath.loginRequired, function(req, res) {
+  //req.user.token = 'tokentest';
+  //res.locals.user.customData['token'] = 42;
+  //console.log = "WTF"
+  //req.user.save();
+  //res.locals.user.save();
+//});
+
+// Retrieve Stormpath token
+
+app.get('/settings/gettoken', stormpath.loginRequired, function(req, res) {
+  req.user.getCustomData(function(err, data) {
+    res.json(data);
+  });
+});
+
+
+////TESTS////
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

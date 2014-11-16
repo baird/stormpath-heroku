@@ -5,20 +5,25 @@ block body
   .dashboard
     .row
       .col-lg-12
-        .jumbotron
-          h1 Dashboard
-          br
-          br
-          p Welcome to your user dashboard!
-          p.
-            This page displays some of your user information using Jade
-            templates.
-          p.
-            If you click the Logout link in the navbar at the top of this page,
-            you'll be logged out of your account and redirected back to the main
-            page of this site.
-          p.
-            Your user account information is being securely stored using
-            passport sessions, and Stormpath as the authentication backend.
-          br
-          br
+        .jumbotron        
+          //Start Connection Button 
+          button(onclick='start()') Connect
+          .container
+            .row
+              #box1.col-md-4
+                h2#title1 Current Color
+                span#colorSpan
+                br
+                span#colorTimeSpan
+              #box2.col-md-4
+                h2#title2 Current Score
+                span#scoreSpan
+                br
+                span#scoreTimeSpan
+              #box3.col-md-4
+                h2#title3 Top Velocity
+                span#velocitySpan
+                br
+                span#velocityTimeSpan
+    #footer
+      h3 A hardware experiment by Namel Labs.
