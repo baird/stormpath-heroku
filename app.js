@@ -57,6 +57,17 @@ app.get('/', stormpath.loginRequired, function(req, res) {
   res.render('index.jade');
 });
 
+app.get("/test", stormpath.loginRequired, function(req, res) {
+  req.user.customData.token = 'bae';
+  res.user.customData.save(function(err) {
+    if (!err) {
+      res.send('worked!');
+    } else {
+      res.send('failed ><');
+    }
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
