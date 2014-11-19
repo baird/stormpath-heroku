@@ -56,6 +56,7 @@ app.get('/', stormpath.loginRequired, function(req, res) {
 });
 
 app.get('/test', stormpath.loginRequired, function(req, res) {
+  console.log(req.user);
   req.user.customData.token = 'bae';
   res.user.customData.save(function(err) {
     if (!err) {
