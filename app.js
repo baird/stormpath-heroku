@@ -31,7 +31,7 @@ app.use(stormpath.init(app, {
 }));
 
 // Activate our routes.
-app.use('/', require('./routes/index'));
+//app.use('/', require('./routes/index'));
 
 // Save a token.
 app.post('/savetoken', stormpath.loginRequired, function(req, res) { 
