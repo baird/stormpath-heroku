@@ -31,7 +31,7 @@ app.use(stormpath.init(app, {
 }));
 
 // Activate our routes.
-//app.use('/', require('./routes/index'));
+app.use('/', require('./routes/index'));
 
 // Save a token.
 app.post('/savetoken', stormpath.loginRequired, function(req, res) { 
@@ -50,50 +50,33 @@ app.get('/gettoken', stormpath.loginRequired, function(req, res) {
   res.json(req.user);
 });
 
-// Home page.
-app.get('/', stormpath.loginRequired, function(req, res) {
-  res.render('index.jade');
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-app.get('/test', stormpath.loginRequired, function(req, res) {
-  console.log(req.user);
-  req.user.customData.token = 'bae';
-  req.user.customData.save(function(err) {
-    if (!err) {
-      res.send('worked!');
-    } else {
-      res.send('failed ><');
-    }
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
   });
 });
-
-//// catch 404 and forward to error handler
-//app.use(function(req, res, next) {
-//  var err = new Error('Not Found');
-//  err.status = 404;
-//  next(err);
-//});
-//
-//// development error handler
-//// will print stacktrace
-//if (app.get('env') === 'development') {
-//  app.use(function(err, req, res, next) {
-//    res.status(err.status || 500);
-//    res.render('error', {
-//      message: err.message,
-//      error: err
-//    });
-//  });
-//}
-//
-//// production error handler
-//// no stacktraces leaked to user
-//app.use(function(err, req, res, next) {
-//  res.status(err.status || 500);
-//  res.render('error', {
-//    message: err.message,
-//    error: {}
-//  });
-//});
 
 app.listen(process.env.PORT || 3000);
