@@ -54,7 +54,7 @@ app.get('/gettoken', stormpath.loginRequired, function(req, res) {
 
 // Home page.
 app.get('/', stormpath.loginRequired, function(req, res) {
-  res.render('index.jade', { token: req.user.customData.token });
+  res.render('index.jade');
 });
 
 // catch 404 and forward to error handler
