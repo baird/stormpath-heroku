@@ -1,4 +1,5 @@
 var express = require('express');
+var stormpath = require('express-stormapth');
 var router = express.Router();
 
 // Render the home page.
