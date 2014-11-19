@@ -29,23 +29,23 @@ router.get('/settings', function (req, res) {
 ////TESTS////
 
 
-// Token save page?
-router.get('/savetoken', function (req, res) {
-  if (!req.user || req.user.status !== 'ENABLED') {
-    return res.redirect('/login');
-  }
+//// Token save page?
+//router.get('/savetoken', function (req, res) {
+//  if (!req.user || req.user.status !== 'ENABLED') {
+//    return res.redirect('/login');
+//  }
+//
+//  res.render('savetoken', {title: 'savetoken', user: req.user});
+//});
 
-  res.render('savetoken', {title: 'savetoken', user: req.user});
-});
-
-// Token get page?
-router.get('/gettoken', function (req, res) {
-  if (!req.user || req.user.status !== 'ENABLED') {
-    return res.redirect('/login');
-  }
-
-  res.render('gettoken', {title: 'gettoken', user: req.user});
-});
+//// Token get page?
+//router.get('/gettoken', function (req, res) {
+//  if (!req.user || req.user.status !== 'ENABLED') {
+//    return res.redirect('/login');
+//  }
+//
+//  res.render('gettoken', {title: 'gettoken', user: req.user});
+//});
 
 ////TESTS////
 

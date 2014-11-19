@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var stormpath = require('express-stormpath');
 var flash = require('connect-flash');
@@ -17,7 +16,6 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
@@ -57,7 +55,7 @@ app.get('/', stormpath.loginRequired, function(req, res) {
   res.render('index.jade');
 });
 
-app.get("/test", stormpath.loginRequired, function(req, res) {
+app.get('/test', stormpath.loginRequired, function(req, res) {
   req.user.customData.token = 'bae';
   res.user.customData.save(function(err) {
     if (!err) {
