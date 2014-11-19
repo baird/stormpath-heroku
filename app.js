@@ -54,7 +54,16 @@ app.use('/', index_routes);
 
 app.post('/savetoken', stormpath.loginRequired, function(req, res) { 
   var token = (req.body.token);
-  console.log(req.body.token);
+  req.user.customData.token = (token);
+  req.user.customData.save(function(err) {
+  if (!err) {
+    console.log('Spark token: ' + (token) + ' saved to SP custom data.');
+  }
+});
+});
+
+/* This is just saving to local node memory...
+
   res.locals.user.token = (token);
 res.locals.user.save(function(err) {
   if (!err) {
@@ -63,12 +72,25 @@ res.locals.user.save(function(err) {
 });
 });
 
+*/
+
 // Retrieve Stormpath token
 
 app.get('/gettoken', stormpath.loginRequired, function(req, res) {
   req.user.token(function(err, data) {
     res.json(data);
   });
+});
+
+// Dudes code
+
+app.get('/', stormpath.loginRequired, function(req, res) {
+  // this will render the index.jade template in your views directory,
+  // and pass in the token as a variable called 'token'. this way, in your
+  // template code, you can say something like:
+  // #{token} to access your token value. then you can use that to write
+  // it into your HTML or frontend javascript code
+  res.render('index.jade', { token: req.user.customData.token });
 });
 
 ////TESTS////
