@@ -1,0 +1,15 @@
+extends layout
+
+block body
+
+  .settings
+    .row
+      .col-lg-12
+        .jumbotron
+            //Start Connection Button 
+            button(onclick='settings()') Settings
+            button(onclick='tokenPlease()') Token
+            button(onclick='saveToken()') Save?
+            button(onclick='getToken()') Get?
+    #footer
+      h3 A hardware experiment by Namel Labs.

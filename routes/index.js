@@ -26,7 +26,6 @@ router.get('/settings', function (req, res) {
   res.render('settings', {title: 'settings', user: req.user});
 });
 
-
 ////TESTS////
 
 
@@ -40,12 +39,12 @@ router.get('/savetoken', function (req, res) {
 });
 
 // Token get page?
-router.get('/settings/gettoken', function (req, res) {
+router.get('/gettoken', function (req, res) {
   if (!req.user || req.user.status !== 'ENABLED') {
     return res.redirect('/login');
   }
 
-  res.render('settings/gettoken', {title: 'settings/gettoken', user: req.user});
+  res.render('gettoken', {title: 'gettoken', user: req.user});
 });
 
 ////TESTS////

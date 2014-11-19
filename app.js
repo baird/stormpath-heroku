@@ -22,6 +22,10 @@ app.use(stormpath.init(app, {
   secretKey:    process.env.STORMPATH_SECRET_KEY,
   application:  process.env.STORMPATH_URL,
   redirectUrl:  '/dashboard',
+
+// Let's make custom data available from the start
+
+  expandCustomData: true,
 }));
 
 app.listen(process.env.PORT || 3000);
@@ -49,8 +53,8 @@ app.use('/', index_routes);
 // Saving token to Stormpath
 
 app.post('/savetoken', stormpath.loginRequired, function(req, res) { 
-  console.log(req.body.token);
   var token = (req.body.token);
+  console.log(req.body.token);
   res.locals.user.token = (token);
 res.locals.user.save(function(err) {
   if (!err) {
@@ -59,22 +63,13 @@ res.locals.user.save(function(err) {
 });
 });
 
-//app.get('/settings/savetoken', stormpath.loginRequired, function(req, res) {
-  //req.user.token = 'tokentest';
-  //res.locals.user.customData['token'] = 42;
-  //console.log = "WTF"
-  //req.user.save();
-  //res.locals.user.save();
-//});
-
 // Retrieve Stormpath token
 
-app.get('/settings/gettoken', stormpath.loginRequired, function(req, res) {
-  req.user.getCustomData(function(err, data) {
+app.get('/gettoken', stormpath.loginRequired, function(req, res) {
+  req.user.token(function(err, data) {
     res.json(data);
   });
 });
-
 
 ////TESTS////
 

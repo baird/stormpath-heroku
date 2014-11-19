@@ -35,30 +35,20 @@ function saveToken() {
   $.ajax({
     type: 'POST',
     url: '/savetoken',
-    data: { token: '1234' },
+    data: { token: window.token },
     success: function() {
-      console.log('saved!');
+      console.log(token);
     }
   })
 }
 
 
-  //$.ajax({
-    //type: 'get',
-    //url: '/settings/savetoken',
-    //success: function (token) {
-        //console.log(token);
-        //console.log = (user.customData['woot']);
-    //}
-  //})
-//}
-
 function getToken() {
   $.ajax({
     type: 'get',
-    url: '/settings/gettoken',
+    url: '/gettoken',
     success: function (data) {
-        console.log(data);
+        //console.log(data);
     }
   })
 }
